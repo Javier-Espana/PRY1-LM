@@ -1,0 +1,15 @@
+2025-08-05 10:36:54,901 [INFO] __main__: Iniciando procesamiento del archivo CSV
+2025-08-05 10:36:54,915 [INFO] processors: Encabezados validados correctamente
+2025-08-05 10:36:54,916 [INFO] __main__: Pruebas de patrones regex completadas
+2025-08-05 10:36:55,089 [INFO] processors: Procesamiento completado. 8287 registros procesados.
+2025-08-05 10:36:55,169 [INFO] __main__: Resultados guardados en c:\Users\RJBar\OneDrive\Desktop\PRY1-LM\output\datos_procesados.csv
+2025-08-05 10:37:04,755 [INFO] __main__: Iniciando procesamiento del archivo CSV
+2025-08-05 10:37:04,765 [INFO] processors: Encabezados validados correctamente
+2025-08-05 10:37:04,766 [INFO] __main__: Pruebas de patrones regex completadas
+2025-08-05 10:37:04,930 [INFO] processors: Procesamiento completado. 8287 registros procesados.
+2025-08-05 10:37:04,990 [INFO] __main__: Resultados guardados en c:\Users\RJBar\OneDrive\Desktop\PRY1-LM\output\datos_procesados.csv
+2025-08-05 11:14:14,851 [INFO] __main__: Iniciando procesamiento del archivo CSV
+2025-08-05 11:14:14,863 [INFO] processors: Encabezados validados correctamente
+2025-08-05 11:14:14,863 [INFO] __main__: Pruebas de patrones regex completadas
+2025-08-05 11:14:15,035 [INFO] processors: Procesamiento completado. 8287 registros procesados.
+2025-08-05 11:14:15,123 [INFO] __main__: Resultados guardados en c:\Users\RJBar\OneDrive\Desktop\PRY1-LM\output\datos_procesados.csv
