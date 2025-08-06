@@ -22,10 +22,12 @@
 
 ### 2. Máquinas de Estado Finito
 Elaborados diagramas para patrones principales:
+- **Header Pattern**: Validación completa de encabezados CSV (`^Identifier,Edition Statement,...$`)
 - **Identifier**: Reconocimiento de números enteros (`^\d+`)
 - **Date of Publication**: Extracción de años (`^([^,]*\d{4}[^,]*)`)
 - **Flickr URL**: Validación de URLs (`^(https?://[^\s,]*flickr\.com[^\s,]*)`)
 - **Issuance type**: Tipos específicos (`^(monographic|serial|integrating resource)`)
+- **Title**: Captura de títulos hasta la primera coma (`^([^,]*?)(?=,|$)`)
 
 ### 3. Carga como Texto
 - Archivo CSV cargado como string completo

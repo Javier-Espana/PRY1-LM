@@ -18,6 +18,7 @@ Este documento### 2.13 Issuance type (Patrón Importante)
 - **Patrón**: `^Identifier,Edition Statement,Place of Publication,Date of Publication,Publisher,Title,Author,Contributors,Corporate Author,Corporate Contributors,Former owner,Engraver,Issuance type,Flickr URL,Shelfmarks$`
 - **Descripción**: Valida el orden exacto de las columnas separadas por comas
 - **Propósito**: Asegurar que el archivo CSV tiene la estructura esperada
+- **Máquina de estado**: Ver `docs/maquinas_estado/header_pattern.md`
 
 ## 2. Campos de Datos
 
@@ -57,7 +58,8 @@ Este documento### 2.13 Issuance type (Patrón Importante)
 - **Patrón**: `^([^,]*?)(?=,|$)`
 - **Descripción**: Título del libro, texto hasta la primera coma
 - **Ejemplo válido**: `"Walter Forbes. [A novel.] By A. A"`
-- **Ejemplo inválido**: Títulos mal formateados
+- **Ejemplo inválido**: Formatos de título incorrectos
+- **Máquina de estado**: Ver `docs/maquinas_estado/title.md`
 
 ### 2.7 Author
 - **Patrón**: `^([^,]*?)(?=,|$)`

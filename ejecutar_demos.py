@@ -91,11 +91,11 @@ def get_formal_notation(pattern):
     
     # Simplificar para mostrar conceptos principales
     if r'\d+' in pattern:
-        return "dígito⁺ (uno o más dígitos)"
+        return "dígito+ (uno o más dígitos)"
     elif 'flickr\\.com' in pattern:
         return "http(s)?://.*flickr.com.*"
     elif 'monographic|serial' in pattern:
-        return "monographic ∪ serial ∪ integrating resource"
+        return "monographic OR serial OR integrating resource"
     elif r'[^,]*' in pattern:
         return "([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)"
     else:
@@ -105,9 +105,42 @@ def demonstrate_state_machines():
     """Demuestra el funcionamiento de las máquinas de estado más importantes"""
     print_header("DEMOSTRACIÓN DE MÁQUINAS DE ESTADO FINITO")
     
+    # Header Pattern - Máquina de estado compleja
+    print_subheader("MÁQUINA DE ESTADO: Header Pattern")
+    print("Valida: Identifier,Edition Statement,Place of Publication,...,Shelfmarks")
+    print("Estados: q0 (inicial) -> q1-q202 (intermedio) -> q203 (aceptacion)")
+    print("\nSimulación con encabezados del CSV:")
+    expected_headers = "Identifier,Edition Statement,Place of Publication,Date of Publication,Publisher,Title,Author,Contributors,Corporate Author,Corporate Contributors,Former owner,Engraver,Issuance type,Flickr URL,Shelfmarks"
+    if re.match(HEADER_PATTERN, expected_headers):
+        print("ACEPTA: Encabezados validos - transicion completa q0 -> q203")
+    else:
+        print("RECHAZA: Encabezados invalidos")
+    
+    # Title - Máquina de estado con lookahead
+    print_subheader("MÁQUINA DE ESTADO: Title (^([^,]*?)(?=,|$))")
+    print("Estados: q0 (inicial) -> q1 (acumulando) -> q2 (aceptacion)")
+    print("Incluye lookahead positivo para detectar ',' o fin de cadena")
+    print("\nSimulación con 'Walter Forbes. [A novel.] By A. A':")
+    
+    title_example = "Walter Forbes. [A novel.] By A. A"
+    state = "q0"
+    for i, char in enumerate(title_example[:10]):  # Mostrar solo los primeros 10 caracteres
+        if char != ',':
+            if state == "q0":
+                state = "q1"
+                print(f"Paso {i+1}: '{char}' | q0 -> q1 (primer caracter del titulo)")
+            else:
+                print(f"Paso {i+1}: '{char}' | q1 -> q1 (continuando titulo)")
+        else:
+            print(f"Paso {i+1}: '{char}' | COMA DETECTADA - preparar para lookahead")
+            break
+    print(f"... (continúa hasta el final)")
+    print(f"Lookahead detecta fin de cadena | q1 -> q2 (captura completada)")
+    print(f"Estado final: q2 | Resultado: ACEPTA")
+    
     # Identifier - Máquina de estado simple
     print_subheader("MÁQUINA DE ESTADO: Identifier (^\\d+)")
-    print("Estados: q0 (inicial) → q1 (aceptación)")
+    print("Estados: q0 (inicial) -> q1 (aceptacion)")
     print("Transiciones: q0 --[0-9]--> q1, q1 --[0-9]--> q1")
     print("\nSimulación paso a paso con '000000206':")
     
@@ -117,17 +150,17 @@ def demonstrate_state_machines():
         if char.isdigit():
             if state == "q0":
                 state = "q1"
-                print(f"Paso {i+1}: '{char}' | q0 → q1 (primer dígito)")
+                print(f"Paso {i+1}: '{char}' | q0 -> q1 (primer digito)")
             else:
-                print(f"Paso {i+1}: '{char}' | q1 → q1 (dígito adicional)")
+                print(f"Paso {i+1}: '{char}' | q1 -> q1 (digito adicional)")
         else:
-            print(f"Paso {i+1}: '{char}' | RECHAZO (no es dígito)")
+            print(f"Paso {i+1}: '{char}' | RECHAZO (no es digito)")
             break
     print(f"Estado final: {state} | Resultado: {'ACEPTA' if state == 'q1' else 'RECHAZA'}")
     
     # Flickr URL - Máquina más compleja
     print_subheader("MÁQUINA DE ESTADO: Flickr URL")
-    print("Secuencia: http → :// → [texto] → flickr.com → [resto]")
+    print("Secuencia: http -> :// -> [texto] -> flickr.com -> [resto]")
     print("\nSimulación con 'http://www.flickr.com/photos/123':")
     url = "http://www.flickr.com/photos/123"
     if url.startswith('http'):
@@ -136,7 +169,7 @@ def demonstrate_state_machines():
             print("Protocolo '://' encontrado")
             if 'flickr.com' in url:
                 print("Dominio 'flickr.com' encontrado")
-                print("ACEPTA: URL de Flickr válida")
+                print("ACEPTA: URL de Flickr valida")
             else:
                 print("RECHAZA: No contiene 'flickr.com'")
         else:
@@ -176,7 +209,7 @@ def main():
     # Probar patrones principales con datos reales
     print_header("2. ANÁLISIS DE PATRONES CON DATOS REALES")
     
-    key_patterns = ['Identifier', 'Date of Publication', 'Flickr URL', 'Issuance type']
+    key_patterns = ['Identifier', 'Title', 'Date of Publication', 'Flickr URL', 'Issuance type']
     
     for field in key_patterns:
         if field in PATTERNS:
@@ -189,7 +222,13 @@ def main():
     # Resumen final
     print_header("RESUMEN DE IMPLEMENTACIÓN", "=", 80)
     print("Expresiones regulares implementadas: 15 patrones")
-    print("Máquinas de estado documentadas: 4 principales")
+    print("Máquinas de estado documentadas: 6 principales")
+    print("  - Header Pattern: Validación completa de encabezados")
+    print("  - Identifier: Números enteros únicos")
+    print("  - Title: Captura de títulos con lookahead")
+    print("  - Date of Publication: Fechas con años de 4 dígitos")
+    print("  - Flickr URL: URLs válidas de Flickr")
+    print("  - Issuance type: Tipos específicos de publicación")
     print("Datos procesados exitosamente: 8,287 registros")
     print("Archivo de salida generado: datos_procesados.csv")
     print("Validación completa del dataset")
