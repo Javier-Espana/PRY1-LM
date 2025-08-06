@@ -106,7 +106,7 @@ def get_formal_notation(pattern): # Convierte regex a notación formal vista en 
     elif 'google\\.com' in pattern:
         return "http(s)?://.*google.com.*"
     elif 'monographic|serial' in pattern:
-        return "monographic ∪ serial ∪ integrating resource"
+        return "monographic ∪ serial ∪ integrating resource ∪ continuing"
     elif r'[^,]*' in pattern:
         return "([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)"
     else:

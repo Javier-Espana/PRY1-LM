@@ -4,7 +4,7 @@
 ================================================================================
 Análisis de Dataset BL-Flickr-Images-Book.csv
 Aplicación de Expresiones Regulares y Máquinas de Estado Finito
-Fecha: 06 de August de 2025 - 10:04:37
+Fecha: 06 de August de 2025 - 10:10:02
 Archivo de salida: output/informeAnálisis.txt
 
 Archivo de datos: ./data/BL-Flickr-Images-Book.csv
@@ -28,7 +28,7 @@ Documentación completa de todas las expresiones regulares usadas en main.py
  ANÁLISIS DE CAMPO: Identifier
 ----------------------------------------------------------------------
 Expresión Regular: ^\d+
-Descripción: Número entero positivo que identifica de manera única cada registro en el dataset
+Descripción: Secuencia de dígitos que identifican de manera única cada registro en el dataset
 Notación vista en clase: dígito⁺ (uno o más dígitos)
 
 EJEMPLOS REALES DEL DATASET:
@@ -370,5 +370,5 @@ INFORMACIÓN DEL ARCHIVO GENERADO
 ================================================================================
 Este archivo contiene toda la documentación del proyecto.
 Archivo guardado en: output/informeAnálisis.txt
-Fecha de generación: 06 de August de 2025 - 10:04:38
+Fecha de generación: 06 de August de 2025 - 10:10:03
 ================================================================================

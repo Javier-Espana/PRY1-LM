@@ -16,7 +16,7 @@ import re
 PATTERNS = {
     'Identifier': {
         'pattern': r'^\d+',
-        'description': 'Número entero positivo que identifica de manera única cada registro en el dataset',
+        'description': 'Secuencia de dígitos que identifican de manera única cada registro en el dataset',
         'example_valid': '12345',
         'example_invalid': 'ABC123'
     },
