@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from patterns import PATTERNS, HEADER_PATTERN
 
-def test_pattern(field_name, pattern_config, test_strings):
+def test_pattern(field_name, pattern_config, test_strings): # Hace una prueba de un patrón con una lista de strings de prueba
     """Prueba un patrón con una lista de strings de prueba"""
     print(f"\n{'='*60}")
     print(f"PROBANDO PATRÓN: {field_name}")
@@ -33,7 +33,7 @@ def test_pattern(field_name, pattern_config, test_strings):
     
     print(f"{'_'*60}")
 
-def demo_regex_patterns():
+def demo_regex_patterns(): # Demuestra todos los patrones de expresiones regulares
     """Demuestra todos los patrones de expresiones regulares"""
     print("DEMOSTRACIÓN DE EXPRESIONES REGULARES")
     print("Proyecto: Análisis de Dataset BL-Flickr-Images-Book.csv")

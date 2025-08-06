@@ -9,7 +9,7 @@ import re
 import pandas as pd
 from typing import Any, List, Dict
 
-def clean_value(header: str, value: str) -> Any:
+def clean_value(header: str, value: str) -> Any: # Limpia y convierte valores según el tipo de campo específico
     """
     Limpia y convierte valores según el tipo de campo específico.
     
@@ -45,7 +45,7 @@ def clean_value(header: str, value: str) -> Any:
         # Para otros campos, solo limpiar espacios en blanco
         return value.strip()
 
-def create_dataframe(headers: List[str], data: List[Dict]) -> pd.DataFrame:
+def create_dataframe(headers: List[str], data: List[Dict]) -> pd.DataFrame: # Convierte los datos procesados a un DataFrame de pandas con tipos correctos
     """
     Convierte los datos procesados a un DataFrame de pandas con tipos correctos.
     
@@ -77,7 +77,7 @@ def create_dataframe(headers: List[str], data: List[Dict]) -> pd.DataFrame:
     
     return df
 
-def save_results(df: pd.DataFrame, output_path: str):
+def save_results(df: pd.DataFrame, output_path: str): # Guarda el DataFrame procesado en un archivo CSV
     """
     Guarda el DataFrame procesado en un archivo CSV.
     

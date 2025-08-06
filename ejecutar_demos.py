@@ -14,19 +14,19 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from patterns import PATTERNS, HEADER_PATTERN
 
-def print_header(title, symbol="=", width=70):
+def print_header(title, symbol="=", width=70): # Imprime un encabezado formateado
     """Imprime un encabezado formateado"""
     print(f"\n{symbol * width}")
     print(f"{title:^{width}}")
     print(f"{symbol * width}")
 
-def print_subheader(title, symbol="-", width=70):
+def print_subheader(title, symbol="-", width=70): # Imprime un subencabezado formateado
     """Imprime un subencabezado formateado"""
     print(f"\n{symbol * width}")
     print(f" {title}")
     print(f"{symbol * width}")
 
-def test_pattern_with_real_data(field_name, pattern_config, csv_file):
+def test_pattern_with_real_data(field_name, pattern_config, csv_file): # Prueba un patrón con datos reales del CSV
     """Prueba un patrón con datos reales del CSV"""
     print_subheader(f"ANÁLISIS DE CAMPO: {field_name}")
     print(f"Expresión Regular: {pattern_config['pattern']}")
@@ -72,7 +72,7 @@ def test_pattern_with_real_data(field_name, pattern_config, csv_file):
             result = "CORRECTO" if (match and expected == "ACEPTA") or (not match and expected == "RECHAZA") else "INCORRECTO"
             print(f"{status} | '{example}' | Esperado: {expected} | {result}")
 
-def get_formal_notation(pattern):
+def get_formal_notation(pattern): # Convierte regex a notación formal vista en clase
     """Convierte regex a notación formal vista en clase"""
     notation_map = {
         r'\d': '[0-9]',
@@ -101,7 +101,7 @@ def get_formal_notation(pattern):
     else:
         return pattern
 
-def demonstrate_state_machines():
+def demonstrate_state_machines(): # Demuestra el funcionamiento de las máquinas de estado más importantes
     """Demuestra el funcionamiento de las máquinas de estado más importantes"""
     print_header("DEMOSTRACIÓN DE MÁQUINAS DE ESTADO FINITO")
     
@@ -144,7 +144,7 @@ def demonstrate_state_machines():
     else:
         print("RECHAZA: No comienza con 'http'")
 
-def main():
+def main(): 
     """Función principal que ejecuta todas las demostraciones"""
     csv_file = r"c:\Users\RJBar\OneDrive\Desktop\PRY1-LM\data\BL-Flickr-Images-Book.csv"
     

@@ -11,13 +11,12 @@ from typing import List, Dict, Tuple
 import patterns
 from utils import clean_value
 
-def load_file(file_path: str) -> str:
+def load_file(file_path: str) -> str: # Carga el archivo CSV completo como texto
     """
     Carga el archivo CSV completo como una cadena de texto.
     
     Esta función lee el archivo CSV de forma completa en memoria como texto plano,
-    sin usar librerías especializadas como pandas o csv. Esto cumple con el 
-    requerimiento del proyecto de cargar el archivo como texto.
+    sin usar librerías.
     
     Args:
         file_path (str): Ruta absoluta al archivo CSV a procesar
@@ -36,7 +35,7 @@ def load_file(file_path: str) -> str:
         print(f"Error al cargar el archivo: {str(e)}")
         raise
 
-def validate_headers(content: str) -> bool:
+def validate_headers(content: str) -> bool: # Valida que los encabezados del CSV coincidan con el patrón esperado
     """
     Valida que los encabezados del CSV coincidan exactamente con el patrón esperado.
     
@@ -55,13 +54,13 @@ def validate_headers(content: str) -> bool:
     first_line = content.split('\n')[0]
     
     # Aplicar el patrón regex para validar estructura de encabezados
-    if re.match(patterns.HEADER_PATTERN, first_line):
+    if re.match(patterns.HEADER_PATTERN, first_line): # Verifica si la primera línea coincide con el patrón HEADER_PATTERN definido en patterns.py
         return True
     else:
         print("Los encabezados no coinciden con el patrón esperado")
         return False
 
-def parse_line(line: str, headers: List[str]) -> Dict:
+def parse_line(line: str, headers: List[str]) -> Dict: # Procesa una línea individual del CSV aplicando algoritmo manual de parsing
     """
     Parsea una línea individual del CSV aplicando algoritmo manual de parsing.
     
@@ -119,7 +118,7 @@ def parse_line(line: str, headers: List[str]) -> Dict:
     
     return row
 
-def parse_content(content: str) -> Tuple[List[str], List[Dict]]:
+def parse_content(content: str) -> Tuple[List[str], List[Dict]]: # Esto procesa todo el contenido del CSV línea por línea
     """
     Procesa todo el contenido del CSV línea por línea.
     
