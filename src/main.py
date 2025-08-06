@@ -30,24 +30,24 @@ def main():
         print("Iniciando procesamiento del archivo CSV")
         
         # Paso 1: Cargar archivo CSV como texto plano (sin usar pandas/csv inicialmente)
-        content = load_file(DATA_PATH)
+        content = load_file(DATA_PATH) # Usa la función de processors para cargar el archivo
         
         # Paso 2: Validar que los encabezados coincidan con el patrón regex esperado
-        if not validate_headers(content):
-            raise ValueError("Encabezados no válidos")
+        if not validate_headers(content): # Usa validate_headers del processors.py para validar encabezados
+            raise ValueError("Encabezados no válidos") # Esto detiene el procesamiento si los encabezados no coinciden
         
         # Paso 3: Ejecutar pruebas de validación de todos los patrones regex definidos
-        test_results = test_patterns()
+        test_results = test_patterns() # Usa la función de validators para validar todos los patrones
         print("Pruebas de patrones regex completadas")
         
         # Paso 4: Procesar el contenido aplicando algoritmos de parsing y regex
-        headers, data = parse_content(content)
+        headers, data = parse_content(content) # Usa la función de processors para extraer datos
         
         # Paso 5: Crear DataFrame de pandas con tipos de datos correctos
-        df = create_dataframe(headers, data)
+        df = create_dataframe(headers, data) # Usa la función de utils para crear el DataFrame y lo guarda en df
         
         # Paso 6: Guardar resultados procesados en archivo CSV de salida
-        save_results(df, OUTPUT_PATH)
+        save_results(df, OUTPUT_PATH) # Usa la función de utils para guardar el DataFrame
         print(f"Resultados guardados en {OUTPUT_PATH}")
         
         # Mostrar resumen estadístico del procesamiento realizado

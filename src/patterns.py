@@ -16,7 +16,7 @@ import re
 PATTERNS = {
     'Identifier': {
         'pattern': r'^\d+',
-        'description': 'Número entero positivo que identifica de manera única cada registro en el dataset',
+        'description': 'Secuencia de dígitos que identifican de manera única cada registro en el dataset',
         'example_valid': '12345',
         'example_invalid': 'ABC123'
     },
@@ -87,8 +87,8 @@ PATTERNS = {
         'example_invalid': ''
     },
     'Issuance type': {
-        'pattern': r'^(monographic|serial|integrating resource)(?=,|$)',
-        'description': 'Tipo de publicación: monográfica, serie o recurso integrado',
+        'pattern': r'^(monographic|serial|integrating resource|continuing)(?=,|$)',
+        'description': 'Tipo de publicación: monográfica, serie, recurso integrado o continuo',
         'example_valid': 'monographic',
         'example_invalid': 'unknown'
     },
@@ -110,7 +110,7 @@ PATTERNS = {
 # Asegura que el archivo tenga exactamente las 15 columnas esperadas en el orden correcto
 HEADER_PATTERN = r'^Identifier,Edition Statement,Place of Publication,Date of Publication,Publisher,Title,Author,Contributors,Corporate Author,Corporate Contributors,Former owner,Engraver,Issuance type,Flickr URL,Shelfmarks$'
 
-def validate_patterns():
+def validate_patterns(): # Valida que todos los patrones regex estén correctamente definidos y sean compilables
     """
     Valida que todos los patrones regex estén correctamente definidos y sean compilables.
     
@@ -122,7 +122,7 @@ def validate_patterns():
     """
     # Iterar sobre todos los patrones definidos para cada campo del CSV
     # Iterar sobre todos los patrones definidos para cada campo del CSV
-    for field, config in PATTERNS.items():
+    for field, config in PATTERNS.items(): # Verifica cada patrón regex
         try:
             # Intentar compilar cada expresión regular para verificar su sintaxis
             re.compile(config['pattern'])
@@ -131,6 +131,6 @@ def validate_patterns():
     
     try:
         # Validar también el patrón de encabezados del CSV
-        re.compile(HEADER_PATTERN)
+        re.compile(HEADER_PATTERN) # Verifica el patrón de encabezados
     except re.error as e:
-        raise ValueError(f"Patrón de encabezado inválido: {str(e)}")
+        raise ValueError(f"Patrón de encabezado inválido: {str(e)}") 

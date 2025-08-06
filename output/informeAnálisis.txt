@@ -1,0 +1,374 @@
+
+================================================================================
+                         PROYECTO DE LÓGICA MATEMÁTICA                          
+================================================================================
+Análisis de Dataset BL-Flickr-Images-Book.csv
+Aplicación de Expresiones Regulares y Máquinas de Estado Finito
+Fecha: 06 de August de 2025 - 10:10:02
+Archivo de salida: output/informeAnálisis.txt
+
+Archivo de datos: ./data/BL-Flickr-Images-Book.csv
+Registros procesados: 8,287 (según ejecución anterior)
+
+======================================================================
+                     1. VALIDACIÓN DE ENCABEZADOS                     
+======================================================================
+Expresión Regular para encabezados:
+^Identifier,Edition Statement,Place of Publication,...,Shelfmarks$
+
+Encabezados encontrados: Identifier,Edition Statement,Place of Publication,Date of Publication,Publisher,Title,Author,Contributors,Corporate Author,Corporate Contributors,Former owner,Engraver,Issuance type,Flickr URL,Shelfmarks
+Resultado: VÁLIDOS
+
+======================================================================
+       2. ANÁLISIS DE TODOS LOS PATRONES REGEX (15 EXPRESIONES)       
+======================================================================
+Documentación completa de todas las expresiones regulares usadas en main.py
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Identifier
+----------------------------------------------------------------------
+Expresión Regular: ^\d+
+Descripción: Secuencia de dígitos que identifican de manera única cada registro en el dataset
+Notación vista en clase: dígito⁺ (uno o más dígitos)
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | '000000206'
+2. ACEPTA | '000000216'
+3. ACEPTA | '000000218'
+4. ACEPTA | '000000472'
+5. ACEPTA | '000000480'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | '12345' | Esperado: ACEPTA | CORRECTO
+RECHAZA | 'ABC123' | Esperado: RECHAZA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Edition Statement
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*?)(?=,|$)
+Descripción: Declaración de edición del libro, captura texto libre hasta encontrar una coma o final de línea
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | 'A new edition, revised, etc.'
+   Grupo capturado: 'A new edition'
+2. ACEPTA | 'Fourth edition, revised, etc.'
+   Grupo capturado: 'Fourth edition'
+3. ACEPTA | 'Nueva edicion, anotada ... y continuada ... por J. J. de Aco...'
+   Grupo capturado: 'Nueva edicion'
+4. ACEPTA | '[Another edition.] Abdollatiphi historiæ Ægypti compendium ....'
+   Grupo capturado: '[Another edition.] Abdollatiphi historiæ Ægypti co...'
+5. ACEPTA | '[Another edition.] Illustrated by John Leech.'
+   Grupo capturado: '[Another edition.] Illustrated by John Leech.'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'First edition' | Esperado: ACEPTA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Place of Publication
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*?)(?=,|$)
+Descripción: Lugar geográfico de publicación, extrae texto hasta la primera coma
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | 'London'
+   Grupo capturado: 'London'
+2. ACEPTA | 'London; Virtue & Yorston'
+   Grupo capturado: 'London; Virtue & Yorston'
+3. ACEPTA | 'London'
+   Grupo capturado: 'London'
+4. ACEPTA | 'London'
+   Grupo capturado: 'London'
+5. ACEPTA | 'London'
+   Grupo capturado: 'London'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'London' | Esperado: ACEPTA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Date of Publication
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*\d{4}[^,]*)(?=,|$)
+Descripción: Fecha de publicación que debe contener un año de exactamente 4 dígitos, permite texto adicional
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | '1879 [1878]'
+   Grupo capturado: '1879 [1878]'
+2. ACEPTA | '1868'
+   Grupo capturado: '1868'
+3. ACEPTA | '1869'
+   Grupo capturado: '1869'
+4. ACEPTA | '1851'
+   Grupo capturado: '1851'
+5. ACEPTA | '1857'
+   Grupo capturado: '1857'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | '1879 [1878]' | Esperado: ACEPTA | CORRECTO
+RECHAZA | 'No date' | Esperado: RECHAZA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Publisher
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*?)(?=,|$)
+Descripción: Nombre del editor/publisher
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | 'S. Tinsley & Co.'
+   Grupo capturado: 'S. Tinsley & Co.'
+2. ACEPTA | 'Virtue & Co.'
+   Grupo capturado: 'Virtue & Co.'
+3. ACEPTA | 'Bradbury, Evans & Co.'
+   Grupo capturado: 'Bradbury'
+4. ACEPTA | 'James Darling'
+   Grupo capturado: 'James Darling'
+5. ACEPTA | 'Wertheim & Macintosh'
+   Grupo capturado: 'Wertheim & Macintosh'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'S. Tinsley & Co.' | Esperado: ACEPTA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Title
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*?)(?=,|$)
+Descripción: Título del libro, texto hasta la primera coma
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | 'Walter Forbes. [A novel.] By A. A'
+   Grupo capturado: 'Walter Forbes. [A novel.] By A. A'
+2. ACEPTA | 'All for Greed. [A novel. The dedication signed: A. A. A., i....'
+   Grupo capturado: 'All for Greed. [A novel. The dedication signed: A....'
+3. ACEPTA | 'Love the Avenger. By the author of “All for Greed.” [The ded...'
+   Grupo capturado: 'Love the Avenger. By the author of “All for Greed....'
+4. ACEPTA | 'Welsh Sketches, chiefly ecclesiastical, to the close of the ...'
+   Grupo capturado: 'Welsh Sketches'
+5. ACEPTA | '[The World in which I live, and my place in it. By E. S. A. ...'
+   Grupo capturado: '[The World in which I live'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'Walter Forbes. [A novel.] By A. A' | Esperado: ACEPTA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Author
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*?)(?=,|$)
+Descripción: Nombre del autor, puede contener iniciales y apellidos
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | 'A. A.'
+   Grupo capturado: 'A. A.'
+2. ACEPTA | 'A., A. A.'
+   Grupo capturado: 'A.'
+3. ACEPTA | 'A., A. A.'
+   Grupo capturado: 'A.'
+4. ACEPTA | 'A., E. S.'
+   Grupo capturado: 'A.'
+5. ACEPTA | 'A., E. S.'
+   Grupo capturado: 'A.'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'A. A.' | Esperado: ACEPTA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Contributors
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*?)(?=,|$)
+Descripción: Contribuidores del libro
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | 'FORBES, Walter.'
+   Grupo capturado: 'FORBES'
+2. ACEPTA | 'BLAZE DE BURY, Marie Pauline Rose - Baroness'
+   Grupo capturado: 'BLAZE DE BURY'
+3. ACEPTA | 'BLAZE DE BURY, Marie Pauline Rose - Baroness'
+   Grupo capturado: 'BLAZE DE BURY'
+4. ACEPTA | 'Appleyard, Ernest Silvanus.'
+   Grupo capturado: 'Appleyard'
+5. ACEPTA | 'BROOME, John Henry.'
+   Grupo capturado: 'BROOME'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'FORBES, Walter.' | Esperado: ACEPTA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Corporate Author
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*?)(?=,|$)
+Descripción: Autor corporativo si aplica
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'British Library' | Esperado: ACEPTA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Corporate Contributors
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*?)(?=,|$)
+Descripción: Contribuidores corporativos
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'Oxford University Press' | Esperado: ACEPTA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Former owner
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*?)(?=,|$)
+Descripción: Propietario anterior del libro
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | 'Panizzi, Anthony - Sir'
+   Grupo capturado: 'Panizzi'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'John Smith Collection' | Esperado: ACEPTA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Engraver
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*?)(?=,|$)
+Descripción: Grabador si aplica
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'William Hogarth' | Esperado: ACEPTA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Issuance type
+----------------------------------------------------------------------
+Expresión Regular: ^(monographic|serial|integrating resource|continuing)(?=,|$)
+Descripción: Tipo de publicación: monográfica, serie, recurso integrado o continuo
+Notación vista en clase: monographic ∪ serial ∪ integrating resource
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | 'monographic'
+   Grupo capturado: 'monographic'
+2. ACEPTA | 'monographic'
+   Grupo capturado: 'monographic'
+3. ACEPTA | 'monographic'
+   Grupo capturado: 'monographic'
+4. ACEPTA | 'monographic'
+   Grupo capturado: 'monographic'
+5. ACEPTA | 'monographic'
+   Grupo capturado: 'monographic'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'monographic' | Esperado: ACEPTA | CORRECTO
+RECHAZA | 'unknown' | Esperado: RECHAZA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Flickr URL
+----------------------------------------------------------------------
+Expresión Regular: ^(https?://[^\s,]*flickr\.com[^\s,]*)(?=,|$)
+Descripción: URL válida del sitio Flickr que debe comenzar con protocolo HTTP/HTTPS y contener el dominio flickr.com
+Notación vista en clase: ^(https?://[^\s,]*flickr\.com[^\s,]*)(?=,|$)
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | 'http://www.flickr.com/photos/britishlibrary/tags/sysnum00000...'
+   Grupo capturado: 'http://www.flickr.com/photos/britishlibrary/tags/s...'
+2. ACEPTA | 'http://www.flickr.com/photos/britishlibrary/tags/sysnum00000...'
+   Grupo capturado: 'http://www.flickr.com/photos/britishlibrary/tags/s...'
+3. ACEPTA | 'http://www.flickr.com/photos/britishlibrary/tags/sysnum00000...'
+   Grupo capturado: 'http://www.flickr.com/photos/britishlibrary/tags/s...'
+4. ACEPTA | 'http://www.flickr.com/photos/britishlibrary/tags/sysnum00000...'
+   Grupo capturado: 'http://www.flickr.com/photos/britishlibrary/tags/s...'
+5. ACEPTA | 'http://www.flickr.com/photos/britishlibrary/tags/sysnum00000...'
+   Grupo capturado: 'http://www.flickr.com/photos/britishlibrary/tags/s...'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'http://www.flickr.com/photos/britishlibrary/tags/sysnum000000206' | Esperado: ACEPTA | CORRECTO
+RECHAZA | 'http://invalid.url' | Esperado: RECHAZA | CORRECTO
+
+----------------------------------------------------------------------
+ ANÁLISIS DE CAMPO: Shelfmarks
+----------------------------------------------------------------------
+Expresión Regular: ^([^,]*?)(?=,|$)
+Descripción: Códigos de ubicación física del libro en la biblioteca, sistema de clasificación interno
+Notación vista en clase: ([cualquier carácter excepto coma])* (cero o más caracteres hasta coma)
+
+EJEMPLOS REALES DEL DATASET:
+1. ACEPTA | 'British Library HMNTS 12641.b.30.'
+   Grupo capturado: 'British Library HMNTS 12641.b.30.'
+2. ACEPTA | 'British Library HMNTS 12626.cc.2.'
+   Grupo capturado: 'British Library HMNTS 12626.cc.2.'
+3. ACEPTA | 'British Library HMNTS 12625.dd.1.'
+   Grupo capturado: 'British Library HMNTS 12625.dd.1.'
+4. ACEPTA | 'British Library HMNTS 10369.bbb.15.'
+   Grupo capturado: 'British Library HMNTS 10369.bbb.15.'
+5. ACEPTA | 'British Library HMNTS 9007.d.28.'
+   Grupo capturado: 'British Library HMNTS 9007.d.28.'
+
+PRUEBAS CON EJEMPLOS PREDEFINIDOS:
+ACEPTA | 'British Library HMNTS 12641.b.30.' | Esperado: ACEPTA | CORRECTO
+
+======================================================================
+                     3. MÁQUINAS DE ESTADO FINITO                     
+======================================================================
+
+======================================================================
+              DEMOSTRACIÓN DE MÁQUINAS DE ESTADO FINITO               
+======================================================================
+
+----------------------------------------------------------------------
+ MÁQUINA DE ESTADO: Identifier (^\d+)
+----------------------------------------------------------------------
+Estados: q0 (inicial) → q1 (aceptación)
+Transiciones: q0 --[0-9]--> q1, q1 --[0-9]--> q1
+
+Simulación paso a paso con '000000206':
+Paso 1: '0' | q0 → q1 (primer dígito)
+Paso 2: '0' | q1 → q1 (dígito adicional)
+Paso 3: '0' | q1 → q1 (dígito adicional)
+Paso 4: '0' | q1 → q1 (dígito adicional)
+Paso 5: '0' | q1 → q1 (dígito adicional)
+Paso 6: '0' | q1 → q1 (dígito adicional)
+Paso 7: '2' | q1 → q1 (dígito adicional)
+Paso 8: '0' | q1 → q1 (dígito adicional)
+Paso 9: '6' | q1 → q1 (dígito adicional)
+Estado final: q1 | Resultado: ACEPTA
+
+----------------------------------------------------------------------
+ MÁQUINA DE ESTADO: Google URL
+----------------------------------------------------------------------
+Secuencia: http → :// → [texto] → google.com → [resto]
+
+Simulación con 'http://www.google.com':
+✓ Prefijo 'http' detectado
+✓ Protocolo '://' encontrado
+✓ Dominio 'google.com' encontrado
+→ ACEPTA: URL de Google válida
+
+================================================================================
+                           RESUMEN DE IMPLEMENTACIÓN                            
+================================================================================
+Expresiones regulares implementadas: 15 patrones
+Máquinas de estado documentadas: 4 principales
+Datos procesados exitosamente: 8,287 registros
+Archivo de salida generado: datos_procesados.csv
+Validación completa del dataset
+
+Todos los requerimientos del proyecto han sido cumplidos.
+================================================================================
+
+
+================================================================================
+INFORMACIÓN DEL ARCHIVO GENERADO
+================================================================================
+Este archivo contiene toda la documentación del proyecto.
+Archivo guardado en: output/informeAnálisis.txt
+Fecha de generación: 06 de August de 2025 - 10:10:03
+================================================================================

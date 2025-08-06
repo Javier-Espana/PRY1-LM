@@ -7,7 +7,7 @@
 import re
 import patterns
 
-def test_patterns():
+def test_patterns(): # Ejecuta pruebas de validación automática para todos los patrones regex definidos
     """
     Ejecuta pruebas de validación automática para todos los patrones regex definidos.
     
@@ -26,7 +26,7 @@ def test_patterns():
     results = {}
     
     # Iterar sobre todos los patrones definidos en el módulo patterns
-    for field, config in patterns.PATTERNS.items():
+    for field, config in patterns.PATTERNS.items(): # Verifica cada patrón regex con el PATTERNS definido en patterns.py
         pattern = config['pattern']
         valid = config['example_valid']
         invalid = config['example_invalid']
