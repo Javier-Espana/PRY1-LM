@@ -87,8 +87,8 @@ PATTERNS = {
         'example_invalid': ''
     },
     'Issuance type': {
-        'pattern': r'^(monographic|serial|integrating resource)(?=,|$)',
-        'description': 'Tipo de publicación: monográfica, serie o recurso integrado',
+        'pattern': r'^(monographic|serial|integrating resource|continuing)(?=,|$)',
+        'description': 'Tipo de publicación: monográfica, serie, recurso integrado o continuo',
         'example_valid': 'monographic',
         'example_invalid': 'unknown'
     },
